@@ -688,7 +688,15 @@
                   </product-recommendations>
                 {%- when 'icon-with-text' -%}
                   {% render 'icon-with-text', block: block %}
-              {%- endcase -%}
+                {%- when 'size_guide' -%}
+                  <div class="product__size-guide-wrapper" {{ block.shopify_attributes }}>
+                    {% if block.settings.size_guide_page != blank %} 
+                      <a class="product__size-guide" href="{{ block.settings.size_guide_page.url }}">{{ block.settings.link_text }}</a>
+                    {% elsif request.design_mode %}            
+                        <p class="product__size-guide-placeholder">Select a size guide page</p>    
+                    {% endif %} 
+                  </div>
+                  {%- endcase -%}
             {%- endfor -%}
             <a href="{{ product.url }}" class="link product__view-details animate-arrow">
               {{ 'products.product.view_full_details' | t }}
@@ -2142,6 +2150,23 @@
           "default": "t:sections.main-product.blocks.icon_with_text.settings.heading_3.default",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.heading_3.label",
           "info": "t:sections.main-product.blocks.icon_with_text.settings.heading.info"
+        }
+      ]
+    },
+    {
+      "type": "size_guide",
+      "name": "Size Guide",
+      "settings": [
+        {
+          "type": "page",
+          "id": "size_guide_page",
+          "label": "Size guide page"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Size guide"
         }
       ]
     }

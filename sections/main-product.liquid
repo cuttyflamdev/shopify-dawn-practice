@@ -692,6 +692,12 @@
                   <div class="product__size-guide-wrapper" {{ block.shopify_attributes }}>
                     {% render 'size-guide-link', page: block.settings.size_guide_page, text: block.settings.link_text%}
                   </div>
+                {%- when 'shipping_note' -%}
+                  <div class="product__shipping-note" {{ block.shopify_attributes }}>
+                    {% if block.settings.note != blank %}
+                      {{ block.settings.note }}
+                      {% endif %}
+                  </div>
                   {%- endcase -%}
             {%- endfor -%}
             <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -2163,6 +2169,17 @@
           "id": "link_text",
           "label": "Link text",
           "default": "Size guide"
+        }
+      ]
+    },
+    {
+      "type": "shipping_note",
+      "name": "Shipping note",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "note",
+          "label": "Note"
         }
       ]
     }

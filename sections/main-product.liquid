@@ -85,7 +85,7 @@
             class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
           >
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
-
+            {{ 'size-guide.css' | asset_url | stylesheet_tag }}
             {%- for block in section.blocks -%}
               {%- case block.type -%}
                 {%- when '@app' -%}
@@ -690,11 +690,7 @@
                   {% render 'icon-with-text', block: block %}
                 {%- when 'size_guide' -%}
                   <div class="product__size-guide-wrapper" {{ block.shopify_attributes }}>
-                    {% if block.settings.size_guide_page != blank %} 
-                      <a class="product__size-guide" href="{{ block.settings.size_guide_page.url }}">{{ block.settings.link_text }}</a>
-                    {% elsif request.design_mode %}            
-                        <p class="product__size-guide-placeholder">Select a size guide page</p>    
-                    {% endif %} 
+                    {% render 'size-guide-link', page: block.settings.size_guide_page, text: block.settings.link_text%}
                   </div>
                   {%- endcase -%}
             {%- endfor -%}

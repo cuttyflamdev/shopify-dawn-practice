@@ -1,0 +1,16 @@
+{% comment %}
+  Renders a link to the size guide page
+
+  Accepts:
+
+  - page: {Object} Page Liquid object (optional)
+  - text: {String} Link text (optional)
+
+  Usage:
+  {% render 'size-guide-link', page: block.settings.size_guide_page, text: block.settings.link_text %}
+{% endcomment %}
+{% if page != blank %} 
+    <a class="product__size-guide" href="{{ page.url }}">{{ text | default: 'Size guide' }}</a>
+{% elsif request.design_mode %}            
+    <p class="product__size-guide-placeholder">Select a size guide page</p>    
+{% endif %} 

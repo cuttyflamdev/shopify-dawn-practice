@@ -27,6 +27,13 @@
           "type": "price",
           "settings": {}
         },
+        "size_guide_4rqnaN": {
+          "type": "size_guide",
+          "settings": {
+            "size_guide_page": "size-guide",
+            "link_text": "Size guide"
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -60,6 +67,7 @@
         "vendor",
         "title",
         "price",
+        "size_guide_4rqnaN",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
@@ -85,6 +93,10 @@
     "disclosures": {
       "type": "disclosures",
       "settings": {
+        "heading": "Disclosures",
+        "heading_size": "h2",
+        "open_by_default": false,
+        "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 0
       }

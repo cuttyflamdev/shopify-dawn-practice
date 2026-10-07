@@ -52,20 +52,10 @@
         "padding_top": 20,
         "padding_bottom": 20
       }
-    },
-    "free_shipping_bar_EFEEah": {
-      "type": "free-shipping-bar",
-      "name": "Free shipping bar",
-      "settings": {
-        "threshold": 75,
-        "message_progress": "You're almost there! Add {amount} more for free shipping",
-        "message_success": "You've unlocked free shipping!"
-      }
     }
   },
   "order": [
     "announcement-bar",
-    "header",
-    "free_shipping_bar_EFEEah"
+    "header"
   ]
 }

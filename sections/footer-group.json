@@ -11,6 +11,33 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "faq_accordion_YrRdiY": {
+      "type": "faq-accordion",
+      "blocks": {
+        "faq_item_UrxEzP": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>We offer a 30-day return policy.</p>"
+          }
+        },
+        "faq_item_hUFAx4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "When do I receive my order?",
+            "answer": "<p>It takes 3 to 5 business days to deliver your order</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_UrxEzP",
+        "faq_item_hUFAx4"
+      ],
+      "name": "FAQ Accordion",
+      "settings": {
+        "heading": "Frequently Asked Questions"
+      }
+    },
     "footer": {
       "type": "footer",
       "settings": {
@@ -30,6 +57,7 @@
     }
   },
   "order": [
+    "faq_accordion_YrRdiY",
     "footer"
   ]
 }

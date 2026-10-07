@@ -18,3 +18,7 @@
     background-color: green;
     transition: width 0.3s ease;
 }
+
+free-shipping-bar {
+    display: block;
+}

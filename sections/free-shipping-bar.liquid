@@ -1,5 +1,8 @@
 
 {{ 'free-shipping-bar.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'free-shipping-bar.js' | asset_url }}" defer></script>
+
 {%- liquid
   assign threshold_in_cents = section.settings.threshold | default: 75 | times: 100
   assign remaining = threshold_in_cents | minus: cart.total_price
@@ -9,6 +12,7 @@
 -%}
 
 <section class="free-shipping-bar page-width">
+<free-shipping-bar data-section-id={{ section.id }}>
 {% if remaining > 0 %}
     <p class="free-shipping-bar__message">
         {{ section.settings.message_progress | replace: placeholder, remaining_money }}
@@ -22,6 +26,7 @@
     <div class="free-shipping-bar__fill" style="width: {{ percent }}%">
     </div>
 </div>
+</free-shipping-bar>
 </section>
 
 {% schema %}

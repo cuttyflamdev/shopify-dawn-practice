@@ -1,0 +1,56 @@
+
+{{ 'free-shipping-bar.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign threshold_in_cents = section.settings.threshold | default: 75 | times: 100
+  assign remaining = threshold_in_cents | minus: cart.total_price
+  assign remaining_money = remaining | money
+  assign placeholder = '{amount}'
+  assign percent = cart.total_price | times: 100.0 | divided_by: threshold_in_cents | at_most: 100 | round
+-%}
+
+<section class="free-shipping-bar page-width">
+{% if remaining > 0 %}
+    <p class="free-shipping-bar__message">
+        {{ section.settings.message_progress | replace: placeholder, remaining_money }}
+    </p>
+{% else %}
+    <p class="free-shipping-bar__message">
+        {{ section.settings.message_success }}
+    </p>
+{% endif %}
+<div class="free-shipping-bar__track" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100">
+    <div class="free-shipping-bar__fill" style="width: {{ percent }}%">
+    </div>
+</div>
+</section>
+
+{% schema %}
+{
+    "name": "Free shipping bar",
+    "settings": [
+        {
+            "type": "number",
+            "id": "threshold",
+            "label": "Free shipping threshold",
+            "default": 75
+        },
+        {
+            "type": "text",
+            "id": "message_progress",
+            "label": "Message progress",
+            "default": "You're almost there! Add {amount} more for free shipping"
+        },
+        {
+            "type": "text",
+            "id": "message_success",
+            "label": "Message success",
+            "default": "You've unlocked free shipping!"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Free shipping bar"
+        }
+    ]
+}
+{% endschema %}

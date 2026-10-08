@@ -36,11 +36,11 @@
 {% if active_threshold != blank %}
     <free-shipping-bar data-section-id="{{ section_id }}">
     {% if remaining > 0 %}
-        <p class="free-shipping-bar__message">
+        <p class="free-shipping-bar__message" aria-live="polite">
             {{ message_progress | replace: placeholder, remaining_money }}
         </p>
     {% else %}
-        <p class="free-shipping-bar__message">
+        <p class="free-shipping-bar__message" aria-live="polite">
             {{ message_success }}
         </p>
     {% endif %}

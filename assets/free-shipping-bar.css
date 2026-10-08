@@ -23,3 +23,7 @@ free-shipping-bar {
     display: block;
     margin-bottom: 1.5rem;
 }
+
+cart-drawer.is-empty free-shipping-bar {
+    display: none;
+}

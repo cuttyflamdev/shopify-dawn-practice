@@ -1,0 +1,41 @@
+{% comment %}
+  Renders a free shipping bar
+
+  Accepts:
+
+  - threshold: {number} A threshold to get free shipping. Default $75 (optional)
+  - message_progress: {string} A message with the amount left 
+  - message_success: {string} A successful message
+  - section_id: {String} A wrapper section's id
+
+  Usage:
+  {% render 'free-shipping-bar', threshold: 75, message_progress: '...', messgage_success: '...', section_id: section.id %}
+{% endcomment %}
+
+{{ 'free-shipping-bar.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'free-shipping-bar.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign threshold_in_cents = threshold | default: 75 | times: 100
+  assign remaining = threshold_in_cents | minus: cart.total_price
+  assign remaining_money = remaining | money
+  assign placeholder = '{amount}'
+  assign percent = cart.total_price | times: 100.0 | divided_by: threshold_in_cents | at_most: 100 | round
+-%}
+
+<free-shipping-bar data-section-id="{{ section_id }}">
+{% if remaining > 0 %}
+    <p class="free-shipping-bar__message">
+        {{ message_progress | replace: placeholder, remaining_money }}
+    </p>
+{% else %}
+    <p class="free-shipping-bar__message">
+        {{ message_success }}
+    </p>
+{% endif %}
+<div class="free-shipping-bar__track" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100">
+    <div class="free-shipping-bar__fill" style="width: {{ percent }}%">
+    </div>
+</div>
+</free-shipping-bar>

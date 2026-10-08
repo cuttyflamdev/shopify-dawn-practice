@@ -1,8 +1,8 @@
 <section class="free-shipping-bar page-width">
     {% render 'free-shipping-bar', 
-        threshold: section.settings.threshold, 
-        message_progress: section.settings.message_progress, 
-        message_success: section.settings.message_success,
+        threshold: settings.free_shipping_threshold, 
+        message_progress: settings.free_shipping_message_progress, 
+        message_success: settings.free_shipping_message_success,
         section_id: section.id
     %}
 </section>
@@ -10,26 +10,6 @@
 {% schema %}
 {
     "name": "Free shipping bar",
-    "settings": [
-        {
-            "type": "number",
-            "id": "threshold",
-            "label": "Free shipping threshold",
-            "default": 75
-        },
-        {
-            "type": "text",
-            "id": "message_progress",
-            "label": "Message progress",
-            "default": "You're almost there! Add {amount} more for free shipping"
-        },
-        {
-            "type": "text",
-            "id": "message_success",
-            "label": "Message success",
-            "default": "You've unlocked free shipping!"
-        }
-    ],
     "presets": [
         {
             "name": "Free shipping bar"

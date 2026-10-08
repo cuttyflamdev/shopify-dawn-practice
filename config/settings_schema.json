@@ -1466,5 +1466,28 @@
         "label": "t:settings_schema.customer_accounts.settings.customer_account_menu.label"
       }
     ]
+  },
+  {
+    "name": "Free shipping bar",
+    "settings": [
+        {
+            "type": "number",
+            "id": "free_shipping_threshold",
+            "label": "Free shipping threshold",
+            "default": 75
+        },
+        {
+            "type": "text",
+            "id": "free_shipping_message_progress",
+            "label": "Message progress",
+            "default": "You're almost there! Add {amount} more for free shipping"
+        },
+        {
+            "type": "text",
+            "id": "free_shipping_message_success",
+            "label": "Message success",
+            "default": "You've unlocked free shipping!"
+        }
+    ]
   }
 ]

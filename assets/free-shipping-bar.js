@@ -8,9 +8,12 @@ if (!customElements.get('free-shipping-bar')) {
 
         async onCartUpdate() {
             const response = await fetch(`${window.location.pathname}?section_id=${this.dataset.sectionId}`);
+            if (!response.ok) return;
             const html = await response.text();
+            if (!this.isConnected) return;
             const doc = new DOMParser().parseFromString(html, 'text/html');
             const newBar = doc.querySelector('free-shipping-bar');
+            if (!newBar) return;
             const newBarFill = newBar.querySelector('.free-shipping-bar__fill');
             const oldBarFill = this.querySelector('.free-shipping-bar__fill');
             oldBarFill.style.width = newBarFill.style.width;

@@ -3,13 +3,14 @@
 
   Accepts:
 
-  - threshold: {number} A threshold to get free shipping. Default $75 (optional)
+  - threshold: {number} A threshold to get free shipping in US dollar. Default $75 (optional)
   - message_progress: {string} A message with the amount left 
   - message_success: {string} A successful message
+  - threshold_cad: {number} A threshold to get free shipping in Canadian dollar. Default $100 (optional)
   - section_id: {String} A wrapper section's id
 
   Usage:
-  {% render 'free-shipping-bar', threshold: 75, message_progress: '...', messgage_success: '...', section_id: section.id %}
+  {% render 'free-shipping-bar', threshold: 75, message_progress: '...', messgage_success: '...', threshold_cad: 100, section_id: section.id %}
 {% endcomment %}
 
 {{ 'free-shipping-bar.css' | asset_url | stylesheet_tag }}
@@ -17,25 +18,35 @@
 <script src="{{ 'free-shipping-bar.js' | asset_url }}" defer></script>
 
 {%- liquid
-  assign threshold_in_cents = threshold | default: 75 | times: 100
-  assign remaining = threshold_in_cents | minus: cart.total_price
-  assign remaining_money = remaining | money
-  assign placeholder = '{amount}'
-  assign percent = cart.total_price | times: 100.0 | divided_by: threshold_in_cents | at_most: 100 | round
+  case cart.currency.iso_code
+    when 'USD'
+        assign active_threshold = threshold | default: 75
+    when 'CAD'
+        assign active_threshold = threshold_cad | default: 100
+  endcase
+  assign threshold_in_cents = active_threshold  | times: 100
+  if active_threshold != blank 
+    assign remaining = threshold_in_cents | minus: cart.total_price
+    assign remaining_money = remaining | money
+    assign placeholder = '{amount}'
+    assign percent = cart.total_price | times: 100.0 | divided_by: threshold_in_cents | at_most: 100 | round
+  endif
 -%}
 
-<free-shipping-bar data-section-id="{{ section_id }}">
-{% if remaining > 0 %}
-    <p class="free-shipping-bar__message">
-        {{ message_progress | replace: placeholder, remaining_money }}
-    </p>
-{% else %}
-    <p class="free-shipping-bar__message">
-        {{ message_success }}
-    </p>
-{% endif %}
-<div class="free-shipping-bar__track" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100">
-    <div class="free-shipping-bar__fill" style="width: {{ percent }}%">
+{% if active_threshold != blank %}
+    <free-shipping-bar data-section-id="{{ section_id }}">
+    {% if remaining > 0 %}
+        <p class="free-shipping-bar__message">
+            {{ message_progress | replace: placeholder, remaining_money }}
+        </p>
+    {% else %}
+        <p class="free-shipping-bar__message">
+            {{ message_success }}
+        </p>
+    {% endif %}
+    <div class="free-shipping-bar__track" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100">
+        <div class="free-shipping-bar__fill" style="width: {{ percent }}%">
+        </div>
     </div>
-</div>
-</free-shipping-bar>
+    </free-shipping-bar>
+{% endif %}

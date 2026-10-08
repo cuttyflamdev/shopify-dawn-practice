@@ -1473,7 +1473,7 @@
         {
             "type": "number",
             "id": "free_shipping_threshold",
-            "label": "Free shipping threshold",
+            "label": "Free shipping threshold (USD)",
             "default": 75
         },
         {
@@ -1487,6 +1487,12 @@
             "id": "free_shipping_message_success",
             "label": "Message success",
             "default": "You've unlocked free shipping!"
+        },
+        {
+          "type": "number",
+          "id": "free_shipping_threshold_cad",
+          "label": "Free shipping threshold (CAD)",
+          "default": 100
         }
     ]
   }

@@ -12,11 +12,7 @@
     "free_shipping_bar_QPGmBW": {
       "type": "free-shipping-bar",
       "name": "Free shipping bar",
-      "settings": {
-        "threshold": 75,
-        "message_progress": "You're almost there! Add {amount} more for free shipping",
-        "message_success": "You've unlocked free shipping!"
-      }
+      "settings": {}
     },
     "cart-items": {
       "type": "main-cart-items",

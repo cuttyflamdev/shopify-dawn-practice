@@ -10,8 +10,15 @@
     <div class="faq__list">
         {%- for block in section.blocks -%}
             <div class="faq__item" {{ block.shopify_attributes }}>
-                <button class="faq__question">{{ block.settings.question }}</button>
-                <div class="faq__answer">
+                <button 
+                    class="faq__question"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="faq-answer-{{ block.id }}"
+                >
+                    {{ block.settings.question }}
+                </button>
+                <div class="faq__answer" id="faq-answer-{{ block.id }}">
                     {{ block.settings.answer }}
                 </div>
             </div>
@@ -52,7 +59,23 @@
     ],
     "presets": [
         {
-            "name": "FAQ Accordion"
+            "name": "FAQ Accordion",
+            "blocks": [
+                {
+                    "type": "faq_item",
+                    "settings": {
+                        "question": "What is your return policy?",
+                        "answer": "<p>We offer a 30-day return policy.</p>"
+                    }
+                },
+                {
+                    "type": "faq_item",
+                    "settings": {
+                        "question": "When do I receive the package?",
+                        "answer": "<p>It takes 3 to 5 business days to deliver your package.</p>"
+                    }
+                }
+            ]
         }
     ]
 }

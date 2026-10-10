@@ -41,7 +41,13 @@
 .faq__answer {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.3s ease, visibility 0s linear 0.3s;
+    visibility: hidden;
+}
+
+.faq__item--open .faq__answer {
+    visibility: visible;
+    transition: max-height 0.3s ease, visibility 0s;
 }
 
 .faq__answer p {

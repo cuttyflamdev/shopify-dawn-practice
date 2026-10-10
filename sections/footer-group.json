@@ -27,11 +27,19 @@
             "question": "When do I receive my order?",
             "answer": "<p>It takes 3 to 5 business days to deliver your order</p>"
           }
+        },
+        "faq_item_TPcmb3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How can I contact the store?",
+            "answer": "<p>You can contact us <a href=\"/pages/contact\" target=\"_blank\" title=\"Contact\">here</a></p>"
+          }
         }
       },
       "block_order": [
         "faq_item_UrxEzP",
-        "faq_item_hUFAx4"
+        "faq_item_hUFAx4",
+        "faq_item_TPcmb3"
       ],
       "name": "FAQ Accordion",
       "settings": {

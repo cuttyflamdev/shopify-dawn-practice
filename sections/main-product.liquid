@@ -698,6 +698,15 @@
                       {{ block.settings.note }}
                       {% endif %}
                   </div>
+                {%- when 'delivery_estimate' -%}
+                  {% liquid
+                    assign current_timestamp = 'now' | date: '%s'
+                    assign lead_time_seconds = product.metafields.custom.delivery_lead_time_days.value | times: 86400
+                    assign delivery_estimate_date = current_timestamp | plus: lead_time_seconds | date: '%A, %B %-d'
+                  %}
+                  <div class="product__delivery_estimate" {{ block.shopify_attributes }}>
+                    Estimate to deliver on: {{ delivery_estimate_date }}
+                  </div>
                   {%- endcase -%}
             {%- endfor -%}
             <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -2182,6 +2191,10 @@
           "label": "Note"
         }
       ]
+    },
+    {
+      "type": "delivery_estimate",
+      "name": "Delivery estimate"
     }
   ],
   "settings": [

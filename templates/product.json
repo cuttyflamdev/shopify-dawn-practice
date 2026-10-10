@@ -45,6 +45,10 @@
           "type": "quantity_selector",
           "settings": {}
         },
+        "delivery_estimate_WU6m7P": {
+          "type": "delivery_estimate",
+          "settings": {}
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -70,6 +74,7 @@
         "size_guide_4rqnaN",
         "variant_picker",
         "quantity_selector",
+        "delivery_estimate_WU6m7P",
         "buy_buttons",
         "description",
         "share"

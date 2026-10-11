@@ -86,6 +86,7 @@
           >
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
             {{ 'size-guide.css' | asset_url | stylesheet_tag }}
+            <script src="{{ 'delivery-estimator.js' | asset_url }}" defer="defer"></script>
             {%- for block in section.blocks -%}
               {%- case block.type -%}
                 {%- when '@app' -%}
@@ -701,12 +702,18 @@
                 {%- when 'delivery_estimate' -%}
                   {% liquid
                     assign current_timestamp = 'now' | date: '%s'
-                    assign lead_time_seconds = product.metafields.custom.delivery_lead_time_days.value | times: 86400
+                    assign lead_time_days = product.metafields.custom.delivery_lead_time_days.value
+                    assign lead_time_seconds = lead_time_days | times: 86400
                     assign delivery_estimate_date = current_timestamp | plus: lead_time_seconds | date: '%A, %B %-d'
                   %}
-                  <div class="product__delivery_estimate" {{ block.shopify_attributes }}>
+                  <delivery-estimator 
+                    data-lead-time="{{ lead_time_days }}"
+                    data-cutoff-hour="14"
+                    data-timezone="{{ settings.delivery_timezone }}"
+                    {{ block.shopify_attributes }}
+                  >
                     Estimate to deliver on: {{ delivery_estimate_date }}
-                  </div>
+                  </delivery-estimator>
                   {%- endcase -%}
             {%- endfor -%}
             <a href="{{ product.url }}" class="link product__view-details animate-arrow">

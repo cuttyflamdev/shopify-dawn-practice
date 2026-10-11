@@ -1493,6 +1493,12 @@
           "id": "free_shipping_threshold_cad",
           "label": "Free shipping threshold (CAD)",
           "default": 100
+        },
+        {
+          "type": "text",
+          "id": "delivery_timezone",
+          "label": "Delivery timezone",
+          "default": "America/Los_Angeles"
         }
     ]
   }

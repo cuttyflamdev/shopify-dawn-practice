@@ -1,6 +1,15 @@
 if (!customElements.get('delivery-estimator')) {
     class DeliveryEstimator extends HTMLElement {
         connectedCallback() {
+            this.render();
+            this.timer = setInterval(() => this.render(), 1000);
+        }
+
+        disconnectedCallback() {
+            clearInterval(this.timer);
+        }
+
+        render() {
             const leadTime = Number(this.getAttribute('data-lead-time'));
             const cutOffHour = Number(this.getAttribute('data-cutoff-hour'));
             const storeTimeZone = this.getAttribute('data-timezone');

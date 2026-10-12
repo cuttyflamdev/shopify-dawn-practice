@@ -38,7 +38,8 @@ if (!customElements.get('delivery-estimator')) {
                 hour12: false
             });
             const storeTime = formatter.formatToParts(new Date());
-            const hour = Number(storeTime.find(part => part.type === 'hour').value);
+            // Convert midnight to 0 hour because some browsers report midnight as 24 with a 24-hour clock
+            const hour = Number(storeTime.find(part => part.type === 'hour').value) % 24;
             const minute = Number(storeTime.find(part => part.type === 'minute').value);
             const second = Number(storeTime.find(part => part.type === 'second').value);
             return { hour, minute, second }; 
@@ -49,9 +50,22 @@ if (!customElements.get('delivery-estimator')) {
                 timeZone: storeTimeZone,
                 weekday: 'long'
             });
-            const date = new Date();
-            date.setDate(date.getDate() + leadTime);
-            const deliveryDay = formatter.format(date);
+
+            // Get the current moment in milliseconds
+            let timestamp = Date.now();
+            let count = 0;
+            const oneDayInMilliseconds = 24 * 60 * 60 * 1000; 
+            while (count < leadTime) {
+                // Step forward one day at a time until enough business days are counted
+                timestamp += oneDayInMilliseconds;
+                // Check for weekday
+                const weekday = formatter.format(timestamp);
+                if (weekday !== 'Saturday' && weekday !== 'Sunday') {
+                    // Increment count
+                    count += 1;
+                }
+            }
+            const deliveryDay = formatter.format(timestamp);
             return deliveryDay;
         }
     }

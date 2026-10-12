@@ -700,20 +700,23 @@
                       {% endif %}
                   </div>
                 {%- when 'delivery_estimate' -%}
-                  {% liquid
-                    assign current_timestamp = 'now' | date: '%s'
+                  {% liquid       
                     assign lead_time_days = product.metafields.custom.delivery_lead_time_days.value
-                    assign lead_time_seconds = lead_time_days | times: 86400
-                    assign delivery_estimate_date = current_timestamp | plus: lead_time_seconds | date: '%A, %B %-d'
                   %}
-                  <delivery-estimator 
-                    data-lead-time="{{ lead_time_days }}"
-                    data-cutoff-hour="{{ settings.delivery_cutoff_hour }}"
-                    data-timezone="{{ settings.delivery_timezone }}"
-                    {{ block.shopify_attributes }}
-                  >
-                    Estimate to deliver on: {{ delivery_estimate_date }}
+                  {% if lead_time_days != blank %}
+                    <delivery-estimator 
+                      data-lead-time="{{ lead_time_days }}"
+                      data-cutoff-hour="{{ settings.delivery_cutoff_hour }}"
+                      data-timezone="{{ settings.delivery_timezone }}"
+                      {{ block.shopify_attributes }}
+                    >
+                      {% if lead_time_days > 1 %}
+                        Estimated delivery: {{ lead_time_days }} business days
+                      {% else %}
+                        Estimated delivery: {{ lead_time_days }} business day
+                      {% endif %}
                   </delivery-estimator>
+                  {% endif %}
                   {%- endcase -%}
             {%- endfor -%}
             <a href="{{ product.url }}" class="link product__view-details animate-arrow">

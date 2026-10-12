@@ -708,7 +708,7 @@
                   %}
                   <delivery-estimator 
                     data-lead-time="{{ lead_time_days }}"
-                    data-cutoff-hour="14"
+                    data-cutoff-hour="{{ settings.delivery_cutoff_hour }}"
                     data-timezone="{{ settings.delivery_timezone }}"
                     {{ block.shopify_attributes }}
                   >

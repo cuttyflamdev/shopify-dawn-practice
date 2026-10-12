@@ -1493,13 +1493,26 @@
           "id": "free_shipping_threshold_cad",
           "label": "Free shipping threshold (CAD)",
           "default": 100
-        },
-        {
+        }
+    ]
+  },
+  {
+    "name": "Delivery estimate",
+    "settings": [
+      {
           "type": "text",
           "id": "delivery_timezone",
           "label": "Delivery timezone",
           "default": "America/Los_Angeles"
-        }
+      },
+      {
+        "type": "range",
+        "id": "delivery_cutoff_hour",
+        "label": "Delivery cutoff hour",
+        "min": 0,
+        "max": 23,
+        "default": 14
+      }
     ]
   }
 ]

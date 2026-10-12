@@ -128,6 +128,7 @@
     "cart_color_scheme": "scheme-1",
     "customer_account_menu": "customer-account-main-menu",
     "free_shipping_threshold": 75,
+    "delivery_cutoff_hour": 14,
     "sections": {
       "main-password-header": {
         "type": "main-password-header",

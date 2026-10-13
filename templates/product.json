@@ -56,6 +56,10 @@
             "show_gift_card_recipient": true
           }
         },
+        "riding_style_dQtr4V": {
+          "type": "riding_style",
+          "settings": {}
+        },
         "description": {
           "type": "description",
           "settings": {}
@@ -76,6 +80,7 @@
         "quantity_selector",
         "delivery_estimate_WU6m7P",
         "buy_buttons",
+        "riding_style_dQtr4V",
         "description",
         "share"
       ],

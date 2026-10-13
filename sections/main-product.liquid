@@ -717,6 +717,18 @@
                       {% endif %}
                   </delivery-estimator>
                   {% endif %}
+                {%- when 'riding_style' -%}
+                  {% liquid
+                    assign riding_style = product.metafields.custom.riding_style.value
+                  %}
+                  {% if riding_style != blank %}
+                    <div class="product__riding-style" {{ block.shopify_attributes }}>
+                        <h3>{{ riding_style.name }}</h3>
+                        <p>{{ riding_style.description }}</p>
+                        <p>Best for: {{ riding_style.best_conditions }}</p>
+                    </div>
+                  {% endif %}
+                  
                   {%- endcase -%}
             {%- endfor -%}
             <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -2205,6 +2217,10 @@
     {
       "type": "delivery_estimate",
       "name": "Delivery estimate"
+    },
+    {
+      "type": "riding_style",
+      "name": "Riding style"
     }
   ],
   "settings": [

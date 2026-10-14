@@ -1,12 +1,15 @@
 # Cutty Theme
-A Shopify theme built on Dawn as a learning and portfolio project
+A Shopify theme built on Dawn 16.0.0 as a learning and portfolio project
 
 ## What's included
 - Hero banner section
-- Custom collection section
+- Featured collection section
 - FAQ accordion section
+- Shipping note block
 - Size guide block
 - Free shipping progress bar
+- Delivery estimator block
+- Riding style block
 
 ## Free Shipping Progress Bar
 
@@ -54,7 +57,74 @@ In the theme editor, open Theme settings, then Free shipping bar:
 - One threshold setting per currency. A store with many currencies would need a different approach, such as a metaobject.
 - Screen reader testing: the message update was announced with Safari + VoiceOver, but not with Brave + VoiceOver.
 - Tested manually. There are no automated tests yet.
-- Built and tested against Dawn [16.0.0]
+
+## Delivery estimator
+A product page block that displays the estimated delivery date with a live countdown to the cutoff time
+
+![Delivery estimator before the cutoff time](docs/images/delivery-estimator-before-cutoff.png)
+
+![Delivery estimator after the cutoff time](docs/images/delivery-estimator-after-cutoff.png)
+
+### Features
+- Lead time set per product
+- The countdown updates live, with no page reload
+- The block is hidden when the lead time field is empty
+- Shows static text (for example, '2 business days') when JavaScript is unavailable
+- Delivery date counts business days and skips weekends
+- After the cutoff hour, the estimate starts counting from the next business day
+
+### How it works
+- Liquid outputs three stable facts: `data-lead-time`, `data-cutoff-hour`, and `data-timezone`
+- JavaScript computes the current time (now) in the store timezone to avoid stale data because pages can be cached
+
+### Files
+| File | Purpose |
+|---|---|
+| `sections/main-product.liquid` | Renders `<delivery-estimator>` element on the product page |
+| `assets/delivery-estimator.js` | Custom element that calculates the delivery dates |
+| `config/settings_schema.json` | "Delivery estimate" theme settings |
+
+### Set up
+- Create the product metafield definition with name `Delivery lead time (days)`, type `Integer`, and key `custom.delivery_lead_time_days`
+- Set a value for `Delivery lead time (days)` on each product that should show an estimate
+- Set a value for `Delivery timezone` and `Delivery cutoff hour` in Theme settings
+- Add the block to the product template in the editor
+
+### Settings
+- Theme settings: "Delivery estimate" group: cutoff hour (integer slider from 0 to 23, default 14), timezone (an IANA name, default America/Los_Angeles)
+- Lead time (an integer), edited in the Metafields card on the product page in the admin
+
+### Known limitations
+- The timezone and cutoff are theme settings, not read from the store admin, so they have to be kept in sync manually
+- A wrong device clock produces a wrong countdown and delivery day
+- Holidays aren't handled
+- Business days are fixed to Monday through Friday
+- The cutoff is store-wide, not per product
+- The timezone is typed as an IANA name. An invalid name logs an error in the browser console, and the element keeps its static fallback text.
+- The estimate comes from the product's lead time and the store cutoff, not from carrier rates, and Shopify's own estimates at checkout are calculated separately, so the two dates can differ
+- The countdown has no live region, so screen readers don't announce it as it updates, which is deliberate
+- Tested manually. There are no automated tests yet
+
+### Why custom instead of an app or Shopify's delivery estimates
+- A theme-native block has no monthly fee and loads no third-party script
+- Works with any shipping provider or rate type
+- Appears on the product page, with a countdown and a per-product lead time
+
+## Riding style block
+A product page block that shows a riding style (name, description and best conditions) from a metaobject entry.
+
+The content is stored once per style, and any number of products can reference it. Editing a style entry updates every product that uses it, with no theme edit. The block renders nothing when a product has no style set.
+
+### Setup
+1. Create a metaobject definition `Riding style` (handle `riding_style`) with three fields: `name`, `description` and `best_conditions`.
+2. Create the entries, for example All-mountain, Freestyle and Powder.
+3. Create a product metafield definition `Riding style` (namespace and key `custom.riding_style`) as a reference to a single `Riding style` entry.
+4. Set a style on each product that should show one.
+5. Add the Riding style block to the product template in the theme editor.
+
+### Known limitations
+- One style per product. A product that suits several styles would need a list of references.
+- The sample entries are generic descriptions for demonstration, not product specifications.
 
 ## Development setup
 
